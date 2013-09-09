@@ -1,0 +1,22 @@
+﻿#
+# 用于 AD DS 部署的 Windows PowerShell 脚本
+#
+
+Import-Module ADDSDeployment
+Install-ADDSDomainController `
+-AllowPasswordReplicationAccountName @("PSLAB\Allowed RODC Password Replication Group") `
+-NoGlobalCatalog:$false `
+-Credential (Get-Credential) `
+-CriticalReplicationOnly:$false `
+-DatabasePath "C:\Windows\NTDS" `
+-DelegatedAdministratorAccountName "PSLAB\Administrator" `
+-DenyPasswordReplicationAccountName @("BUILTIN\Administrators", "BUILTIN\Server Operators", "BUILTIN\Backup Operators", "BUILTIN\Account Operators", "PSLAB\Denied RODC Password Replication Group") `
+-DomainName "pslab.test" `
+-InstallDns:$true `
+-LogPath "C:\Windows\NTDS" `
+-NoRebootOnCompletion:$false `
+-ReadOnlyReplica:$true `
+-SiteName "Default-First-Site-Name" `
+-SysvolPath "C:\Windows\SYSVOL" `
+-Force:$true
+
